@@ -3,3 +3,4 @@ requests==2.26.0
 pandas==1.3.3  # Add the specific versions of the libraries used
 # Add other dependencies as needed
 gunicorn==20.1.0
+beautifulsoup4==4.12.2
