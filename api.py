@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from fetch_html import fetch_html
 from extract_product_info import get_product_info
 from scrape_reviews import scrape_reviews, save_to_csv
@@ -6,11 +6,11 @@ from generate_summary import generate_summary_from_csv
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/execute_main_script": {"origins": "*"}})  # All origins are allowed here
 
 @app.route('/execute_main_script', methods=['GET'])
 def execute_main_script():
-    url = 'https://www.flipkart.com/realme-c51-mint-green-64-gb/p/itm0e93bcb87927f?pid=MOBGSQGGC7NY4PXC&lid=LSTMOBGSQGGC7NY4PXCO7WY2Y&marketplace=FLIPKART&store=tyy%2F4io&spotlightTagId=BestsellerId_tyy%2F4io&srno=b_1_1&otracker=browse&fm=organic&iid=846b767b-2c4f-4cfc-adb1-785494f24499.MOBGSQGGC7NY4PXC.SEARCH&ppt=browse&ppn=browse&ssid=aegxunapio0000001698431916885'
+    url = request.args.get('url')  # Get the URL from the query parameter
 
     # Fetch product information
     soup = fetch_html(url)
@@ -59,4 +59,4 @@ def execute_main_script():
         return "Failed to retrieve product information."
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
+    app.run(debug=True, host='0.0.0.0', port=8080)  # Change the port as per your requirements
