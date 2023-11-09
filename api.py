@@ -6,7 +6,7 @@ from generate_summary import generate_summary_from_csv
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, resources={r"/execute_main_script": {"origins": "*"}})  # All origins are allowed here
+CORS(app, resources={r"/execute_main_script": {"origins": "https://vkomment-main.web.app"}})  # All origins are allowed here
 
 @app.route('/execute_main_script', methods=['GET'])
 def execute_main_script():
